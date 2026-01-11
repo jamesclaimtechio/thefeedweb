@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface ArticleCardProps {
   title: string;
@@ -11,49 +12,10 @@ interface ArticleCardProps {
   variant?: 'default' | 'compact' | 'horizontal';
 }
 
-// Mock articles for demo
-export const MOCK_ARTICLES = [
-  {
-    title: 'Cape Town Leads the Way in Sustainable Urban Development',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.',
-    date: '11/01/2026',
-    category: 'Local',
-    author: 'Sarah Johnson',
-    slug: 'sustainable-development',
-  },
-  {
-    title: 'New Cultural Hub Opens in Historic District',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.',
-    date: '10/01/2026',
-    category: 'Culture',
-    author: 'Michael Peters',
-    slug: 'cultural-hub-opens',
-  },
-  {
-    title: 'Tech Innovation Driving Economic Growth',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.',
-    date: '10/01/2026',
-    category: 'Business',
-    author: 'Emma Williams',
-    slug: 'tech-innovation',
-  },
-  {
-    title: 'Community Gardens Transform Urban Spaces',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.',
-    date: '09/01/2026',
-    category: 'Local',
-    author: 'David Chen',
-    slug: 'community-gardens',
-  },
-];
-
 export function ArticleCard({
   title,
   excerpt,
+  image,
   date,
   category,
   author,
@@ -68,7 +30,16 @@ export function ArticleCard({
       >
         {/* Thumbnail */}
         <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden bg-[var(--surface)]">
-          <div className="absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-300" />
+          {image ? (
+            <Image
+              src={image}
+              alt={title}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-300" />
+          )}
         </div>
 
         <div className="flex-1">
@@ -89,7 +60,16 @@ export function ArticleCard({
       >
         {/* Thumbnail */}
         <div className="relative aspect-square w-32 flex-shrink-0 overflow-hidden bg-[var(--surface)]">
-          <div className="absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-300" />
+          {image ? (
+            <Image
+              src={image}
+              alt={title}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-300" />
+          )}
         </div>
 
         <div className="flex flex-1 flex-col justify-center">
@@ -109,23 +89,34 @@ export function ArticleCard({
     <Link href={`/article/${slug}`} className="article-card group block">
       {/* Image */}
       <div className="relative mb-4 aspect-[4/3] overflow-hidden bg-[var(--surface)]">
-        <div className="article-image absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-300" />
-        {/* Placeholder icon */}
-        <div className="absolute inset-0 flex items-center justify-center text-[var(--muted)]">
-          <svg
-            className="h-12 w-12 opacity-30"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1}
-              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-            />
-          </svg>
-        </div>
+        {image ? (
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="article-image object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <>
+            <div className="article-image absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-300" />
+            {/* Placeholder icon */}
+            <div className="absolute inset-0 flex items-center justify-center text-[var(--muted)]">
+              <svg
+                className="h-12 w-12 opacity-30"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Content */}

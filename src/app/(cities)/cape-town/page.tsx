@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
+import { TrendingStories, ArticleCard } from '@/components/ui';
 import {
-  TrendingStories,
-  MOCK_TRENDING_STORIES,
-  ArticleCard,
-} from '@/components/ui';
+  CAPE_TOWN_STORIES,
+  getTrendingStories,
+} from '@/lib/stories';
 
 export const metadata: Metadata = {
   title: 'Cape Town News | The Feed',
@@ -12,80 +13,15 @@ export const metadata: Metadata = {
     'Breaking news, local stories, and updates from Cape Town, South Africa. Your trusted source for hot on the minute news.',
 };
 
-const CAPE_TOWN_ARTICLES = [
-  {
-    title: 'Table Mountain Conservation Reaches New Milestone',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.',
-    date: '11/01/2026',
-    category: 'Local',
-    author: 'Sarah Johnson',
-    slug: 'table-mountain-conservation',
-  },
-  {
-    title: 'New Public Transport Routes Transform CBD Access',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.',
-    date: '11/01/2026',
-    category: 'Local',
-    author: 'Michael Peters',
-    slug: 'transport-routes-cbd',
-  },
-  {
-    title: 'Tech Startup Scene Flourishes in Woodstock',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.',
-    date: '10/01/2026',
-    category: 'Business',
-    author: 'Emma Williams',
-    slug: 'tech-startup-woodstock',
-  },
-  {
-    title: 'Historic Bo-Kaap Homes Receive Heritage Protection',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.',
-    date: '10/01/2026',
-    category: 'Culture',
-    author: 'David Chen',
-    slug: 'bo-kaap-heritage',
-  },
-  {
-    title: 'Waterfront Development Plans Unveiled',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.',
-    date: '09/01/2026',
-    category: 'Business',
-    author: 'Lisa Anderson',
-    slug: 'waterfront-development',
-  },
-  {
-    title: 'Local Artists Transform Urban Spaces',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.',
-    date: '09/01/2026',
-    category: 'Culture',
-    author: 'James Miller',
-    slug: 'artists-urban-spaces',
-  },
-  {
-    title: 'Stormers Secure Historic Championship Victory',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.',
-    date: '08/01/2026',
-    category: 'Sports',
-    author: 'Thomas Newman',
-    slug: 'stormers-championship',
-  },
-  {
-    title: 'Renewable Energy Projects Power Thousands of Homes',
-    excerpt:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.',
-    date: '08/01/2026',
-    category: 'Technology',
-    author: 'Liv Gunther',
-    slug: 'renewable-energy-projects',
-  },
-];
+// Transform stories to the format TrendingStories expects
+const trendingStories = getTrendingStories(4).map((story, index) => ({
+  id: String(index + 1),
+  category: story.category,
+  title: story.title,
+  date: story.date,
+  author: story.author,
+  slug: story.slug,
+}));
 
 export default function CapeTownPage() {
   return (
@@ -118,29 +54,34 @@ export default function CapeTownPage() {
 
           {/* Featured Article */}
           <Link
-            href={`/article/${CAPE_TOWN_ARTICLES[0].slug}`}
+            href={`/article/${CAPE_TOWN_STORIES[0].slug}`}
             className="group mb-8 block border-b border-[var(--border)] pb-8"
           >
             <div className="grid gap-6 md:grid-cols-2">
               <div className="relative aspect-[4/3] overflow-hidden bg-[var(--surface)]">
-                <div className="absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-300" />
+                <Image
+                  src={CAPE_TOWN_STORIES[0].image}
+                  alt={CAPE_TOWN_STORIES[0].title}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  priority
+                />
               </div>
               <div className="flex flex-col justify-center">
                 <p className="category-label mb-2">
-                  {CAPE_TOWN_ARTICLES[0].category}
+                  {CAPE_TOWN_STORIES[0].category}
                 </p>
                 <h2
                   className="mb-3 text-2xl font-bold leading-tight group-hover:text-[var(--accent)]"
                   style={{ fontFamily: 'var(--font-playfair)' }}
                 >
-                  {CAPE_TOWN_ARTICLES[0].title}
+                  {CAPE_TOWN_STORIES[0].title}
                 </h2>
                 <p className="mb-4 text-[var(--muted)]">
-                  {CAPE_TOWN_ARTICLES[0].excerpt}
+                  {CAPE_TOWN_STORIES[0].excerpt}
                 </p>
                 <p className="text-xs text-[var(--muted)]">
-                  {CAPE_TOWN_ARTICLES[0].date} •{' '}
-                  {CAPE_TOWN_ARTICLES[0].author}
+                  {CAPE_TOWN_STORIES[0].date} • {CAPE_TOWN_STORIES[0].author}
                 </p>
               </div>
             </div>
@@ -149,8 +90,17 @@ export default function CapeTownPage() {
           {/* Article Grid */}
           <p className="category-label mb-6">Latest Stories</p>
           <div className="grid gap-8 sm:grid-cols-2">
-            {CAPE_TOWN_ARTICLES.slice(1).map((article) => (
-              <ArticleCard key={article.slug} {...article} />
+            {CAPE_TOWN_STORIES.slice(1).map((article) => (
+              <ArticleCard
+                key={article.slug}
+                title={article.title}
+                excerpt={article.excerpt}
+                date={article.date}
+                category={article.category}
+                author={article.author}
+                slug={article.slug}
+                image={article.image}
+              />
             ))}
           </div>
         </div>
@@ -158,7 +108,7 @@ export default function CapeTownPage() {
         {/* Sidebar */}
         <div className="lg:col-span-4">
           <div className="sticky top-20">
-            <TrendingStories stories={MOCK_TRENDING_STORIES.slice(0, 4)} />
+            <TrendingStories stories={trendingStories} />
 
             {/* City Info Box */}
             <div className="mt-8 border border-[var(--border)] p-6">

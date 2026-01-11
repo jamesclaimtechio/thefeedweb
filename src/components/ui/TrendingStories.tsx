@@ -13,58 +13,6 @@ interface TrendingStoriesProps {
   stories: TrendingStory[];
 }
 
-// Mock data for demo
-export const MOCK_TRENDING_STORIES: TrendingStory[] = [
-  {
-    id: '1',
-    category: 'Breaking',
-    title: 'Major Development in Table Mountain Conservation Efforts',
-    date: '11/01/2026',
-    author: 'Sarah Johnson',
-    slug: 'table-mountain-conservation',
-  },
-  {
-    id: '2',
-    category: 'Local',
-    title: 'New Transport Routes Announced for Cape Town CBD',
-    date: '11/01/2026',
-    author: 'Michael Peters',
-    slug: 'new-transport-routes',
-  },
-  {
-    id: '3',
-    category: 'Politics',
-    title: 'City Council Approves Historic Budget Allocation',
-    date: '10/01/2026',
-    author: 'Emma Williams',
-    slug: 'city-council-budget',
-  },
-  {
-    id: '4',
-    category: 'Business',
-    title: 'Tech Startup Hub Opens in Woodstock District',
-    date: '10/01/2026',
-    author: 'David Chen',
-    slug: 'tech-startup-hub',
-  },
-  {
-    id: '5',
-    category: 'Sports',
-    title: 'Stormers Secure Historic Victory in Championship',
-    date: '09/01/2026',
-    author: 'James Miller',
-    slug: 'stormers-victory',
-  },
-  {
-    id: '6',
-    category: 'Technology',
-    title: 'Solar Farm Project Set to Power Thousands of Homes',
-    date: '09/01/2026',
-    author: 'Lisa Anderson',
-    slug: 'solar-farm-project',
-  },
-];
-
 export function TrendingStories({ stories }: TrendingStoriesProps) {
   return (
     <div className="w-full">
