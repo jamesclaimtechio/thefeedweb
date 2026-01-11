@@ -1,26 +1,156 @@
 @import "tailwindcss";
 
 :root {
+  /* Primary Colors */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
+  
+  /* Accent - Orange */
+  --accent: #E8712C;
+  --accent-hover: #D4631F;
+  
+  /* Grays */
+  --muted: #666666;
+  --muted-foreground: #999999;
+  --border: #E5E5E5;
+  --border-dark: #CCCCCC;
+  
+  /* Surface colors */
+  --surface: #F5F5F5;
+  --surface-dark: #1a1a1a;
+  
+  /* Typography */
+  --font-masthead: var(--font-oswald);
+  --font-headline: var(--font-playfair);
+  --font-body: var(--font-geist-sans);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-masthead: var(--font-oswald);
+  --font-headline: var(--font-playfair);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Remove dark mode for newspaper aesthetic - keep it light */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
+}
+
+/* Utility classes for the design system */
+.font-masthead {
+  font-family: var(--font-masthead), sans-serif;
+}
+
+.font-headline {
+  font-family: var(--font-headline), serif;
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+.border-default {
+  border-color: var(--border);
+}
+
+/* Category label style */
+.category-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Numbered badge for trending stories */
+.trending-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background-color: var(--accent);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* READ MORE button style */
+.btn-read-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--foreground);
+  border-radius: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--foreground);
+  transition: all 0.2s ease;
+}
+
+.btn-read-more:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* Subscribe button style */
+.btn-subscribe {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--accent);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn-subscribe:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Divider line */
+.divider {
+  height: 1px;
+  background-color: var(--border);
+  width: 100%;
+}
+
+/* Article card hover effect */
+.article-card {
+  transition: transform 0.2s ease;
+}
+
+.article-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Smooth image transitions */
+.article-image {
+  transition: transform 0.3s ease;
+}
+
+.article-card:hover .article-image {
+  transform: scale(1.02);
 }
